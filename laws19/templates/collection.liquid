@@ -1,5 +1,5 @@
 <div class="container">
-  {% paginate collection.products by 4 %}
+  {% paginate collection.products by 3 %}
   <div class="row my-5">
     <h1 class="text-center">{{ collection.title }}</h1>
   </div>
@@ -14,29 +14,28 @@
     </select>
   </div>
 
-  <div class="row justify-content-center my-5">
+  <div class="row justify-content-center my-5 p-2">
     {% for product in collection.products %}
     {% assign image = product.featured_media.preview_image %}
-    <div class="col-3 g-2">
-      <div class="card" style="width: 18rem;">
-        {% if image != blank %}
-        <img class='card-img-top' src="{{ image | img_url: 'large' }}" alt="{{ product.title }}">
-        {% else %}
-        {{ 'product-1' | placeholder_svg_tag: 'card-img-top' }}
-        {% endif %}
+      <div class="col row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 py-2">
+        <div class="card" style="width: 18rem;">
+          {% if image != blank %}
+          <img src="{{ image | img_url: 'large' }}" alt="{{ product.title }}" class='card-img-top' >
+          {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'card-img-top' }}
+          {% endif %}
 
-        <div class="card-body">
-          <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
-          <p>{{ product.price | money}}</p>
+          <div class="card-body">
+            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+            <p>{{ product.price | money}}</p>
+          </div>
         </div>
-      </div>
     </div>
 
     {% else %}
     <p>no matches</p>
     {% endfor %}
   </div>
-
 
   {% render 'pagination', paginate: paginate %}
 
